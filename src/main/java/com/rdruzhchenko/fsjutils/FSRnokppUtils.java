@@ -2,7 +2,7 @@ package com.rdruzhchenko.fsjutils;
 
 import java.time.LocalDate;
 
-public class FSRnokppValidator {
+public class FSRnokppUtils {
 
     public static boolean isValidRnokpp(String code) {
         if (code == null || !code.matches("\\d{10}")) {

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FSRnokppValidatorTest {
+class FSRnokppUtilsTest {
 
     @Test
     public void testEmpty() {
@@ -12,7 +12,7 @@ class FSRnokppValidatorTest {
         var rnokpp = "";
 
         // When
-        var result = FSRnokppValidator.isValidRnokpp(rnokpp);
+        var result = FSRnokppUtils.isValidRnokpp(rnokpp);
 
         // Then
         assertFalse(result);
