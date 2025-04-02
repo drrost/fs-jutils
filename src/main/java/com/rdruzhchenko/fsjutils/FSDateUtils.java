@@ -1,6 +1,5 @@
 package com.rdruzhchenko.fsjutils;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -10,7 +9,6 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class FSDateUtils {
-    private static String DATE_SEPARATOR = ".";
 
     public static final String DATE_FORMAT_LONG = "dd.MM.yyyy";
     private static final String DATE_FORMAT_MIDDLE = "MM.yyyy";
@@ -25,7 +23,7 @@ public class FSDateUtils {
     public static final String DATE_FORMAT_POSTGRES = "yyyy-MM-dd";
 
     public static Date dateFromString(String dateString) throws RuntimeException {
-        if (dateString == null || dateString.equals(""))
+        if (dateString == null || dateString.isEmpty())
             return null;
         Date result = dateFrom(DATE_FORMAT_LONG, dateString);
         if (result != null)
@@ -136,14 +134,12 @@ public class FSDateUtils {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
         LocalDate newLocalDate = localDate.plusDays(i);
-        Date newDate = Date.from(newLocalDate.atStartOfDay()
+        return Date.from(newLocalDate.atStartOfDay()
                 .atZone(ZoneId.systemDefault()).toInstant());
-        return newDate;
     }
 
     public static boolean isValidDate(String dateString) {
-        Date date = null;
-        date = dateFromString(dateString);
+        Date date = dateFromString(dateString);
         return date != null;
     }
 
@@ -214,12 +210,10 @@ public class FSDateUtils {
 
     public static String getWeekStart(String date) {
 
-        LocalDate today = null;
         Date dateDate = FSDateUtils.dateFromString(date);
-        today = dateToLocalDate(dateDate);
 
         // Go backward to get Monday
-        LocalDate monday = today;
+        LocalDate monday = dateToLocalDate(dateDate);
         while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
             monday = monday.minusDays(1);
         }
@@ -228,12 +222,10 @@ public class FSDateUtils {
     }
 
     public static String getWeekEnd(String date) {
-        LocalDate today = null;
         Date dateDate = FSDateUtils.dateFromString(date);
-        today = dateToLocalDate(dateDate);
 
         // Go forward to get Sunday
-        LocalDate sunday = today;
+        LocalDate sunday = dateToLocalDate(dateDate);
         while (sunday.getDayOfWeek() != DayOfWeek.SUNDAY) {
             sunday = sunday.plusDays(1);
         }

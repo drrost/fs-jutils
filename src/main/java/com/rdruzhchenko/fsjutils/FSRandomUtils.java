@@ -6,11 +6,10 @@ import java.util.UUID;
 
 public class FSRandomUtils {
 
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
 
     public static int randInt(int min, int max) {
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
+        return rand.nextInt((max - min) + 1) + min;
     }
 
     public static int randInt() {
@@ -53,7 +52,7 @@ public class FSRandomUtils {
     }
 
     public static byte[] randBytes() {
-        byte[] randomBytes = new byte[randInt(10, 100)]; // create a byte array of length 10
+        byte[] randomBytes = new byte[randInt(10, 100)];
         SecureRandom random = new SecureRandom();
         random.nextBytes(randomBytes);
         return randomBytes;
