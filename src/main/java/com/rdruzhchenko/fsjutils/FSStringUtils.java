@@ -153,5 +153,36 @@ public class FSStringUtils {
         return fileName == null ? "" : fileName.toString();
     }
 
+    public static boolean isAllUpperCase(String input) {
+        if (input == null || input.isEmpty()) {
+            return false;
+        }
 
+        for (char c : input.toCharArray()) {
+            if (Character.isLetter(c) && !Character.isUpperCase(c)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean isCapitalized(String input) {
+        if (input == null || input.isEmpty()) {
+            return false;
+        }
+
+        char firstChar = input.charAt(0);
+        if (!Character.isUpperCase(firstChar)) {
+            return false;
+        }
+
+        for (int i = 1; i < input.length(); i++) {
+            if (!Character.isLowerCase(input.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
