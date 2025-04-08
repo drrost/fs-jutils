@@ -46,7 +46,7 @@ public class FSFileSystemUtils {
         }
     }
 
-    public void copy(String source, String target) throws IOException {
+    public static void copy(String source, String target) throws IOException {
         Path sourcePath = Paths.get(source);
         Path targetPath = Paths.get(target);
         Files.copy(sourcePath, targetPath, REPLACE_EXISTING);
