@@ -139,6 +139,12 @@ public class FSDateUtils {
     }
 
     public static boolean isValidDate(String dateString) {
+        if (dateString == null) {
+            return false;
+        }
+        if (dateString.length() > 10) {
+            return false;
+        }
         try {
             Date date = dateFromString(dateString);
             return date != null;

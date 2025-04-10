@@ -17,4 +17,16 @@ class FSDateUtilsTest {
         // Then
         assertFalse(result);
     }
+
+    @Test
+    public void testLongerThanDate() {
+        // Given
+        var date = "22.06.2022,";
+
+        // When
+        var result = FSDateUtils.isValidDate(date);
+
+        // Then
+        assertFalse(result);
+    }
 }
