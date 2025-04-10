@@ -91,14 +91,14 @@ public class FSDateUtils {
 
     public static LocalDate dateToLocalDate(Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
     }
 
     public static Date localDateToDate(LocalDate dateToConvert) {
         return Date.from(dateToConvert.atStartOfDay()
-                .atZone(ZoneId.systemDefault())
-                .toInstant());
+            .atZone(ZoneId.systemDefault())
+            .toInstant());
     }
 
     private static Date dateFrom(String format, String dateString) {
@@ -131,16 +131,20 @@ public class FSDateUtils {
 
     public static Date dateByAddDaysAsDate(Date date, int i) {
         LocalDate localDate = date.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
         LocalDate newLocalDate = localDate.plusDays(i);
         return Date.from(newLocalDate.atStartOfDay()
-                .atZone(ZoneId.systemDefault()).toInstant());
+            .atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public static boolean isValidDate(String dateString) {
-        Date date = dateFromString(dateString);
-        return date != null;
+        try {
+            Date date = dateFromString(dateString);
+            return date != null;
+        } catch (RuntimeException e) {
+            return false;
+        }
     }
 
     public static int daysBetween(Date dateBegin, Date dateEnd) {
@@ -148,11 +152,11 @@ public class FSDateUtils {
             return -1;
         }
         LocalDate date1 = dateBegin.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
         LocalDate date2 = dateEnd.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
         return (int) Duration.between(date1.atStartOfDay(), date2.atStartOfDay()).toDays();
     }
 
@@ -264,7 +268,9 @@ public class FSDateUtils {
     }
 
     public static boolean isTimeGreaterThan(String time1, String time2) {
-        if (time1.equals(time2)) { return false; }
+        if (time1.equals(time2)) {
+            return false;
+        }
         return !isTimeLessThan(time1, time2);
     }
 
