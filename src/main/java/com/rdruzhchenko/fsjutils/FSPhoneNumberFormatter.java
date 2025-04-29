@@ -4,7 +4,7 @@ public class FSPhoneNumberFormatter {
 
     public static String format(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isBlank()) {
-            throw new IllegalArgumentException("Phone number cannot be null or empty");
+            return phoneNumber;
         }
 
         String digits = phoneNumber.replaceAll("[^\\d+]", "");
