@@ -23,7 +23,7 @@ This document contains a comprehensive list of improvement tasks for the FastStr
    - [X] FSRnokppUtils
 
 [ ] 3. Create a developer guide with:
-   - [ ] Architecture overview
+   - [X] Architecture overview
    - [ ] Coding standards
    - [ ] Testing requirements
 
@@ -47,9 +47,9 @@ This document contains a comprehensive list of improvement tasks for the FastStr
    - [ ] Split FSDateUtils into smaller, focused classes
    - [ ] Split FSStringUtils into smaller, focused classes
 
-[ ] 8. Implement proper dependency injection:
-   - [ ] Remove direct instantiation of dependencies (e.g., ObjectMapper)
-   - [ ] Allow for configuration of dependencies
+[X] 8. Implement proper dependency injection:
+   - [X] Remove direct instantiation of dependencies (e.g., ObjectMapper)
+   - [X] Allow for configuration of dependencies
 
 ## Code Quality Improvements
 
