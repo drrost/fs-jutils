@@ -2,6 +2,8 @@ package com.rdruzhchenko.fsjutils.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.rdruzhchenko.fsjutils.exception.FSJsonException;
 
 import java.lang.reflect.Field;
@@ -13,8 +15,75 @@ import java.util.List;
  * Utility class providing JSON serialization and deserialization operations.
  * This class contains methods for converting objects to JSON strings,
  * parsing JSON strings into objects, and handling JSON arrays.
+ * 
+ * The class uses a configurable ObjectMapper instance for all operations.
+ * This class is thread-safe and can be safely used in multi-threaded environments.
  */
 public class FSJsonUtils {
+
+    private static volatile ObjectMapper objectMapper = createDefaultObjectMapper();
+    private static final Object lock = new Object();
+
+    /**
+     * Creates a default ObjectMapper with standard configuration.
+     *
+     * @return A new ObjectMapper instance with default configuration
+     */
+    private static ObjectMapper createDefaultObjectMapper() {
+        return new ObjectMapper();
+    }
+
+    /**
+     * Gets the current ObjectMapper instance used by this utility class.
+     *
+     * @return The current ObjectMapper instance
+     */
+    public static ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+
+    /**
+     * Sets a custom ObjectMapper to be used by this utility class.
+     * This method is thread-safe.
+     *
+     * @param mapper The ObjectMapper instance to use
+     */
+    public static void setObjectMapper(ObjectMapper mapper) {
+        if (mapper == null) {
+            throw new IllegalArgumentException("ObjectMapper cannot be null");
+        }
+        synchronized (lock) {
+            objectMapper = mapper;
+        }
+    }
+
+    /**
+     * Configures the ObjectMapper with common settings.
+     * This method is thread-safe.
+     *
+     * @param failOnUnknownProperties Whether to fail on unknown properties during deserialization
+     * @param prettyPrint Whether to enable pretty printing for serialization
+     */
+    public static void configureObjectMapper(boolean failOnUnknownProperties, boolean prettyPrint) {
+        synchronized (lock) {
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, failOnUnknownProperties);
+            if (prettyPrint) {
+                objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+            } else {
+                objectMapper.disable(SerializationFeature.INDENT_OUTPUT);
+            }
+        }
+    }
+
+    /**
+     * Resets the ObjectMapper to its default configuration.
+     * This method is thread-safe.
+     */
+    public static void resetObjectMapper() {
+        synchronized (lock) {
+            objectMapper = createDefaultObjectMapper();
+        }
+    }
 
     /**
      * Converts an object to a JSON string.
@@ -25,7 +94,6 @@ public class FSJsonUtils {
      * @throws FSJsonException if serialization fails
      */
     public static <T> String mapToJson(T restModel) {
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(restModel);
         } catch (JsonProcessingException e) {
@@ -41,9 +109,12 @@ public class FSJsonUtils {
      * @param clazz The class of the object to create
      * @return An object of the specified class created from the JSON string
      * @throws FSJsonException if deserialization fails
+     * @throws IllegalArgumentException if json is null
      */
     public static <T> T mapFromJson(String json, Class<T> clazz) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        if (json == null) {
+            throw new IllegalArgumentException("JSON string cannot be null");
+        }
         try {
             return objectMapper.readValue(json, clazz);
         } catch (JsonProcessingException e) {
@@ -59,9 +130,12 @@ public class FSJsonUtils {
      * @param clazz The class of the objects to create
      * @return A list of objects of the specified class created from the JSON array
      * @throws FSJsonException if deserialization or conversion fails
+     * @throws IllegalArgumentException if json is null
      */
     public static <T> List<T> mapFromJsonArray(String json, Class<T> clazz) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        if (json == null) {
+            throw new IllegalArgumentException("JSON string cannot be null");
+        }
         List modelList = mapFromJson(json, ArrayList.class);
         var list = modelList.stream().map(o -> {
             try {
@@ -114,9 +188,12 @@ public class FSJsonUtils {
      * @param clazz The class of the objects to create
      * @return A list of objects of the specified class created from the JSON array
      * @throws FSJsonException if deserialization fails
+     * @throws IllegalArgumentException if json is null
      */
     public static <T> List<T> jsonToList(String json, Class<T> clazz) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        if (json == null) {
+            throw new IllegalArgumentException("JSON string cannot be null");
+        }
         try {
             var typeFactory = objectMapper.getTypeFactory()
                 .constructCollectionType(List.class, clazz);
