@@ -105,6 +105,16 @@ public class FSJsonUtils {
         return restModel;
     }
 
+    /**
+     * Converts a JSON array string directly to a list of objects of the specified class.
+     * This method uses Jackson's TypeFactory for more efficient list deserialization.
+     *
+     * @param <T> The type of objects in the list
+     * @param json The JSON array string to parse
+     * @param clazz The class of the objects to create
+     * @return A list of objects of the specified class created from the JSON array
+     * @throws FSJsonException if deserialization fails
+     */
     public static <T> List<T> jsonToList(String json, Class<T> clazz) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

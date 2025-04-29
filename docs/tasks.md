@@ -11,16 +11,16 @@ This document contains a comprehensive list of improvement tasks for the FastStr
    - [ ] Contribution guidelines
    - [ ] License information
 
-[ ] 2. Add JavaDoc to all public classes and methods:
-   - [ ] FSStringUtils
-   - [ ] FSDateUtils
-   - [ ] FSJsonUtils
-   - [ ] FSNameUtils
-   - [ ] FSFileUtils
-   - [ ] FSFileSystemUtils
-   - [ ] FSPhoneNumberFormatter
-   - [ ] FSRandomUtils
-   - [ ] FSRnokppUtils
+[X] 2. Add JavaDoc to all public classes and methods:
+   - [X] FSStringUtils
+   - [X] FSDateUtils
+   - [X] FSJsonUtils
+   - [X] FSNameUtils
+   - [X] FSFileUtils
+   - [X] FSFileSystemUtils
+   - [X] FSPhoneNumberFormatter
+   - [X] FSRandomUtils
+   - [X] FSRnokppUtils
 
 [ ] 3. Create a developer guide with:
    - [ ] Architecture overview
