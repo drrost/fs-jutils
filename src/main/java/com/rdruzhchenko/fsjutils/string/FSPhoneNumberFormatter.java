@@ -1,4 +1,4 @@
-package com.rdruzhchenko.fsjutils;
+package com.rdruzhchenko.fsjutils.string;
 
 /**
  * Utility class for formatting phone numbers.

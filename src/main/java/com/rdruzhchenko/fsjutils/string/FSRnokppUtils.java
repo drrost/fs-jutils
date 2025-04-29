@@ -1,5 +1,6 @@
-package com.rdruzhchenko.fsjutils;
+package com.rdruzhchenko.fsjutils.string;
 
+import com.rdruzhchenko.fsjutils.date.FSDateUtils;
 import com.rdruzhchenko.fsjutils.exception.FSValidationException;
 import java.time.LocalDate;
 

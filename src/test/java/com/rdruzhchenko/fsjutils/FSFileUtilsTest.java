@@ -1,5 +1,6 @@
 package com.rdruzhchenko.fsjutils;
 
+import com.rdruzhchenko.fsjutils.file.FSFileUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

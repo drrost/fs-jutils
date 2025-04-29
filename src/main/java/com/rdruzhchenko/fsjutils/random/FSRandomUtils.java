@@ -1,4 +1,4 @@
-package com.rdruzhchenko.fsjutils;
+package com.rdruzhchenko.fsjutils.random;
 
 import java.security.SecureRandom;
 import java.util.Random;

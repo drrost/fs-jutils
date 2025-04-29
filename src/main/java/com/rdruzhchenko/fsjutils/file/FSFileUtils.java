@@ -1,4 +1,4 @@
-package com.rdruzhchenko.fsjutils;
+package com.rdruzhchenko.fsjutils.file;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

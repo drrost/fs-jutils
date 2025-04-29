@@ -1,4 +1,4 @@
-package com.rdruzhchenko.fsjutils;
+package com.rdruzhchenko.fsjutils.string;
 
 import com.rdruzhchenko.fsjutils.exception.FSStringException;
 import java.nio.file.Path;

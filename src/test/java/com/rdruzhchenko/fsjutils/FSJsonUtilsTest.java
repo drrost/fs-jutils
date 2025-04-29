@@ -1,6 +1,7 @@
 package com.rdruzhchenko.fsjutils;
 
 import com.rdruzhchenko.fsjutils.exception.FSJsonException;
+import com.rdruzhchenko.fsjutils.json.FSJsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

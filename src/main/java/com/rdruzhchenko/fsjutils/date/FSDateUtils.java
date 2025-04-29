@@ -1,4 +1,4 @@
-package com.rdruzhchenko.fsjutils;
+package com.rdruzhchenko.fsjutils.date;
 
 import com.rdruzhchenko.fsjutils.exception.FSDateException;
 import java.text.ParseException;

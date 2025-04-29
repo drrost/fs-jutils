@@ -1,4 +1,4 @@
-package com.rdruzhchenko.fsjutils;
+package com.rdruzhchenko.fsjutils.file;
 
 import com.rdruzhchenko.fsjutils.exception.FSFileException;
 import java.io.IOException;
