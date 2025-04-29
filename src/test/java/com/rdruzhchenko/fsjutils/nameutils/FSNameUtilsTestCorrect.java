@@ -1,69 +1,92 @@
 package com.rdruzhchenko.fsjutils.nameutils;
 
 import com.rdruzhchenko.fsjutils.FSNameUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("FSNameUtils - correct method")
 class FSNameUtilsTestCorrect {
 
-    @Test
-    public void correct() {
-        // Given
-        String name = "Іван-Василь";
+    @Nested
+    @DisplayName("Name correction tests")
+    class NameCorrectionTests {
 
-        // When
-        String corrected = FSNameUtils.correct(name);
+        @Test
+        @DisplayName("Should preserve hyphenated names")
+        public void shouldPreserveHyphenatedNames() {
+            // Given
+            String name = "Іван-Василь";
 
-        // Then
-        assertEquals(name, corrected);
-    }
+            // When
+            String corrected = FSNameUtils.correct(name);
 
-    @Test
-    public void ogly() {
-        // Given
-        String name = "Мустафа-огли";
+            // Then
+            assertEquals(name, corrected);
+        }
 
-        // When
-        String corrected = FSNameUtils.correct(name);
+        @Nested
+        @DisplayName("Suffix tests")
+        class SuffixTests {
 
-        // Then
-        assertEquals(name, corrected);
-    }
+            @Test
+            @DisplayName("Should preserve names with -ogly suffix")
+            public void shouldPreserveNamesWithOglySuffix() {
+                // Given
+                String name = "Мустафа-огли";
 
-    @Test
-    public void ogly2() {
-        // Given
-        String name = "Бахтіяр-огли";
+                // When
+                String corrected = FSNameUtils.correct(name);
 
-        // When
-        String corrected = FSNameUtils.correct(name);
+                // Then
+                assertEquals(name, corrected);
+            }
 
-        // Then
-        assertEquals(name, corrected);
-    }
+            @Test
+            @DisplayName("Should preserve names with -ogly suffix (variant 2)")
+            public void shouldPreserveNamesWithOglySuffixVariant2() {
+                // Given
+                String name = "Бахтіяр-огли";
 
-    @Test
-    public void daPrefix() {
-        // Given
-        String name = "Да Море";
+                // When
+                String corrected = FSNameUtils.correct(name);
 
-        // When
-        String corrected = FSNameUtils.correct(name);
+                // Then
+                assertEquals(name, corrected);
+            }
+        }
 
-        // Then
-        assertEquals("да Море", corrected);
-    }
+        @Nested
+        @DisplayName("Prefix tests")
+        class PrefixTests {
 
-    @Test
-    public void daPrefix2() {
-        // Given
-        String name = "Да море";
+            @Test
+            @DisplayName("Should correct 'Da' prefix to lowercase and capitalize following word")
+            public void shouldCorrectDaPrefixToLowercaseAndCapitalizeFollowingWord() {
+                // Given
+                String name = "Да Море";
 
-        // When
-        String corrected = FSNameUtils.correct(name);
+                // When
+                String corrected = FSNameUtils.correct(name);
 
-        // Then
-        assertEquals("да Море", corrected);
+                // Then
+                assertEquals("да Море", corrected);
+            }
+
+            @Test
+            @DisplayName("Should correct 'Da' prefix to lowercase and capitalize following word (lowercase variant)")
+            public void shouldCorrectDaPrefixToLowercaseAndCapitalizeFollowingWordLowercaseVariant() {
+                // Given
+                String name = "Да море";
+
+                // When
+                String corrected = FSNameUtils.correct(name);
+
+                // Then
+                assertEquals("да Море", corrected);
+            }
+        }
     }
 }

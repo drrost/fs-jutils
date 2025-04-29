@@ -1,64 +1,76 @@
 package com.rdruzhchenko.fsjutils.dateutils;
 
 import com.rdruzhchenko.fsjutils.FSDateUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("FSDateUtils - daysBetween method")
 class FSDateUtilsBetweenTest {
 
-    @Test
-    public void testToday() {
-        // Given
-        var today = FSDateUtils.getCurrentDateAsDate();
+    @Nested
+    @DisplayName("daysBetween tests")
+    class DaysBetweenTests {
 
-        // When
-        var days = FSDateUtils.daysBetween(today, today);
+        @Test
+        @DisplayName("Should return zero days when dates are the same")
+        public void shouldReturnZeroDaysWhenDatesAreTheSame() {
+            // Given
+            var today = FSDateUtils.getCurrentDateAsDate();
 
-        // Then
-        assertEquals(0, days);
-    }
+            // When
+            var days = FSDateUtils.daysBetween(today, today);
 
-    @Test
-    public void testOneDay() {
-        // Given
-        var today = FSDateUtils.getCurrentDateAsDate();
-        var yesterday = FSDateUtils.dateByAddDaysAsDate(today, -1);
+            // Then
+            assertEquals(0, days);
+        }
 
-        // When
-        var days = FSDateUtils.daysBetween(yesterday, today);
+        @Test
+        @DisplayName("Should return one day when comparing today with yesterday")
+        public void shouldReturnOneDayWhenComparingTodayWithYesterday() {
+            // Given
+            var today = FSDateUtils.getCurrentDateAsDate();
+            var yesterday = FSDateUtils.dateByAddDaysAsDate(today, -1);
 
-        // Then
-        assertEquals(1, days);
-    }
+            // When
+            var days = FSDateUtils.daysBetween(yesterday, today);
 
-    @Test
-    public void test30DaysApril() {
-        // Given
-        var dateInString = "12.04.2022";
-        var dateOutString = "12.05.2022";
-        var dateIn = FSDateUtils.dateFromString(dateInString);
-        var dateOut = FSDateUtils.dateFromString(dateOutString);
+            // Then
+            assertEquals(1, days);
+        }
 
-        // When
-        var days = FSDateUtils.daysBetween(dateIn, dateOut);
+        @Test
+        @DisplayName("Should return 30 days for April to May period")
+        public void shouldReturn30DaysForAprilToMayPeriod() {
+            // Given
+            var dateInString = "12.04.2022";
+            var dateOutString = "12.05.2022";
+            var dateIn = FSDateUtils.dateFromString(dateInString);
+            var dateOut = FSDateUtils.dateFromString(dateOutString);
 
-        // Then
-        assertEquals(30, days);
-    }
+            // When
+            var days = FSDateUtils.daysBetween(dateIn, dateOut);
 
-    @Test
-    public void test30DaysMay() {
-        // Given
-        var dateInString = "12.05.2022";
-        var dateOutString = "12.06.2022";
-        var dateIn = FSDateUtils.dateFromString(dateInString);
-        var dateOut = FSDateUtils.dateFromString(dateOutString);
+            // Then
+            assertEquals(30, days);
+        }
 
-        // When
-        var days = FSDateUtils.daysBetween(dateIn, dateOut);
+        @Test
+        @DisplayName("Should return 31 days for May to June period")
+        public void shouldReturn31DaysForMayToJunePeriod() {
+            // Given
+            var dateInString = "12.05.2022";
+            var dateOutString = "12.06.2022";
+            var dateIn = FSDateUtils.dateFromString(dateInString);
+            var dateOut = FSDateUtils.dateFromString(dateOutString);
 
-        // Then
-        assertEquals(31, days);
+            // When
+            var days = FSDateUtils.daysBetween(dateIn, dateOut);
+
+            // Then
+            assertEquals(31, days);
+        }
     }
 }

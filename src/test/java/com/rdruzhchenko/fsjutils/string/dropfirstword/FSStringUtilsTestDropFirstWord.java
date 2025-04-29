@@ -1,57 +1,69 @@
 package com.rdruzhchenko.fsjutils.string.dropfirstword;
 
 import com.rdruzhchenko.fsjutils.FSStringUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("FSStringUtils - dropFirstWord method")
 public class FSStringUtilsTestDropFirstWord {
 
-    @Test
-    void testDropFirstWordEmpty() {
-        // Given
-        String s = "";
+    @Nested
+    @DisplayName("dropFirstWord tests")
+    class DropFirstWordTests {
 
-        // When
-        var result = FSStringUtils.dropFirstWord(s);
+        @Test
+        @DisplayName("Should return empty string when input is empty")
+        void shouldReturnEmptyStringWhenInputIsEmpty() {
+            // Given
+            String s = "";
 
-        // Then
-        assertEquals("", result);
-    }
+            // When
+            var result = FSStringUtils.dropFirstWord(s);
 
-    @Test
-    void testDropFirstWordOneWord() {
-        // Given
-        String s = "one";
+            // Then
+            assertEquals("", result);
+        }
 
-        // When
-        var result = FSStringUtils.dropFirstWord(s);
+        @Test
+        @DisplayName("Should return empty string when input has only one word")
+        void shouldReturnEmptyStringWhenInputHasOnlyOneWord() {
+            // Given
+            String s = "one";
 
-        // Then
-        assertEquals("", result);
-    }
+            // When
+            var result = FSStringUtils.dropFirstWord(s);
 
-    @Test
-    void testDropFirstWordTwoWords() {
-        // Given
-        String s = "one two ";
+            // Then
+            assertEquals("", result);
+        }
 
-        // When
-        var result = FSStringUtils.dropFirstWord(s);
+        @Test
+        @DisplayName("Should return second word when input has two words")
+        void shouldReturnSecondWordWhenInputHasTwoWords() {
+            // Given
+            String s = "one two ";
 
-        // Then
-        assertEquals("two ", result);
-    }
+            // When
+            var result = FSStringUtils.dropFirstWord(s);
 
-    @Test
-    void testDropFirstWordTwoWordsLeadingSpace() {
-        // Given
-        String s = "  one two ";
+            // Then
+            assertEquals("two ", result);
+        }
 
-        // When
-        var result = FSStringUtils.dropFirstWord(s);
+        @Test
+        @DisplayName("Should handle leading spaces correctly when dropping first word")
+        void shouldHandleLeadingSpacesCorrectlyWhenDroppingFirstWord() {
+            // Given
+            String s = "  one two ";
 
-        // Then
-        assertEquals("two ", result);
+            // When
+            var result = FSStringUtils.dropFirstWord(s);
+
+            // Then
+            assertEquals("two ", result);
+        }
     }
 }

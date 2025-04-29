@@ -1,57 +1,69 @@
 package com.rdruzhchenko.fsjutils.string.trimleading;
 
 import com.rdruzhchenko.fsjutils.FSStringUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("FSStringUtils - trimLeading method")
 public class FSStringUtilsTestTrimLeading {
 
-    @Test
-    void testTrimEmpty() {
-        // Given
-        String s = "";
+    @Nested
+    @DisplayName("trimLeading tests")
+    class TrimLeadingTests {
 
-        // When
-        var result = FSStringUtils.trimLeading(s);
+        @Test
+        @DisplayName("Should return empty string when input is empty")
+        void shouldReturnEmptyStringWhenInputIsEmpty() {
+            // Given
+            String s = "";
 
-        // Then
-        assertEquals("", result);
-    }
+            // When
+            var result = FSStringUtils.trimLeading(s);
 
-    @Test
-    void testTrimWithoutSpaces() {
-        // Given
-        String s = "one two";
+            // Then
+            assertEquals("", result);
+        }
 
-        // When
-        var result = FSStringUtils.trimLeading(s);
+        @Test
+        @DisplayName("Should return same string when input has no leading spaces")
+        void shouldReturnSameStringWhenInputHasNoLeadingSpaces() {
+            // Given
+            String s = "one two";
 
-        // Then
-        assertEquals("one two", result);
-    }
+            // When
+            var result = FSStringUtils.trimLeading(s);
 
-    @Test
-    void testTrimOnlyTailSpaces() {
-        // Given
-        String s = "one  two   ";
+            // Then
+            assertEquals("one two", result);
+        }
 
-        // When
-        var result = FSStringUtils.trimLeading(s);
+        @Test
+        @DisplayName("Should return same string when input has only trailing spaces")
+        void shouldReturnSameStringWhenInputHasOnlyTrailingSpaces() {
+            // Given
+            String s = "one  two   ";
 
-        // Then
-        assertEquals("one  two   ", result);
-    }
+            // When
+            var result = FSStringUtils.trimLeading(s);
 
-    @Test
-    void testTrimLeadAndTailSpaces() {
-        // Given
-        String s = "  one  two   ";
+            // Then
+            assertEquals("one  two   ", result);
+        }
 
-        // When
-        var result = FSStringUtils.trimLeading(s);
+        @Test
+        @DisplayName("Should remove only leading spaces when input has both leading and trailing spaces")
+        void shouldRemoveOnlyLeadingSpacesWhenInputHasBothLeadingAndTrailingSpaces() {
+            // Given
+            String s = "  one  two   ";
 
-        // Then
-        assertEquals("one  two   ", result);
+            // When
+            var result = FSStringUtils.trimLeading(s);
+
+            // Then
+            assertEquals("one  two   ", result);
+        }
     }
 }

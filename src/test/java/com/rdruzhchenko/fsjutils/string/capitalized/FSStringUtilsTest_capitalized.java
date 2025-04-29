@@ -1,58 +1,70 @@
 package com.rdruzhchenko.fsjutils.string.capitalized;
 
 import com.rdruzhchenko.fsjutils.FSStringUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@DisplayName("FSStringUtils - isCapitalized method")
 public class FSStringUtilsTest_capitalized {
 
-    @Test
-    public void testCapitalized() {
-        // Given
-        var s = "Іван";
+    @Nested
+    @DisplayName("isCapitalized tests")
+    class IsCapitalizedTests {
 
-        // When
-        var result = FSStringUtils.isCapitalized(s);
+        @Test
+        @DisplayName("Should return true for properly capitalized string")
+        public void shouldReturnTrueForProperlyCapitalizedString() {
+            // Given
+            var s = "Іван";
 
-        // Then
-        assertTrue(result);
-    }
+            // When
+            var result = FSStringUtils.isCapitalized(s);
 
-    @Test
-    public void testUppercased() {
-        // Given
-        var s = "ІВАН";
+            // Then
+            assertTrue(result);
+        }
 
-        // When
-        var result = FSStringUtils.isCapitalized(s);
+        @Test
+        @DisplayName("Should return false for all uppercase string")
+        public void shouldReturnFalseForAllUppercaseString() {
+            // Given
+            var s = "ІВАН";
 
-        // Then
-        assertFalse(result);
-    }
+            // When
+            var result = FSStringUtils.isCapitalized(s);
 
-    @Test
-    public void testLowercased() {
-        // Given
-        var s = "іван";
+            // Then
+            assertFalse(result);
+        }
 
-        // When
-        var result = FSStringUtils.isCapitalized(s);
+        @Test
+        @DisplayName("Should return false for all lowercase string")
+        public void shouldReturnFalseForAllLowercaseString() {
+            // Given
+            var s = "іван";
 
-        // Then
-        assertFalse(result);
-    }
+            // When
+            var result = FSStringUtils.isCapitalized(s);
 
-    @Test
-    public void testCapitalizedWrong() {
-        // Given
-        var s = "іВан";
+            // Then
+            assertFalse(result);
+        }
 
-        // When
-        var result = FSStringUtils.isCapitalized(s);
+        @Test
+        @DisplayName("Should return false for incorrectly capitalized string")
+        public void shouldReturnFalseForIncorrectlyCapitalizedString() {
+            // Given
+            var s = "іВан";
 
-        // Then
-        assertFalse(result);
+            // When
+            var result = FSStringUtils.isCapitalized(s);
+
+            // Then
+            assertFalse(result);
+        }
     }
 }
