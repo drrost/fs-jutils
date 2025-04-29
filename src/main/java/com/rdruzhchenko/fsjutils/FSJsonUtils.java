@@ -9,8 +9,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Utility class providing JSON serialization and deserialization operations.
+ * This class contains methods for converting objects to JSON strings,
+ * parsing JSON strings into objects, and handling JSON arrays.
+ */
 public class FSJsonUtils {
 
+    /**
+     * Converts an object to a JSON string.
+     *
+     * @param <T> The type of the object to convert
+     * @param restModel The object to convert to JSON
+     * @return The JSON string representation of the object
+     * @throws FSJsonException if serialization fails
+     */
     public static <T> String mapToJson(T restModel) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -20,6 +33,15 @@ public class FSJsonUtils {
         }
     }
 
+    /**
+     * Converts a JSON string to an object of the specified class.
+     *
+     * @param <T> The type of the object to create
+     * @param json The JSON string to parse
+     * @param clazz The class of the object to create
+     * @return An object of the specified class created from the JSON string
+     * @throws FSJsonException if deserialization fails
+     */
     public static <T> T mapFromJson(String json, Class<T> clazz) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -29,6 +51,15 @@ public class FSJsonUtils {
         }
     }
 
+    /**
+     * Converts a JSON array string to a list of objects of the specified class.
+     *
+     * @param <T> The type of objects in the list
+     * @param json The JSON array string to parse
+     * @param clazz The class of the objects to create
+     * @return A list of objects of the specified class created from the JSON array
+     * @throws FSJsonException if deserialization or conversion fails
+     */
     public static <T> List<T> mapFromJsonArray(String json, Class<T> clazz) {
         ObjectMapper objectMapper = new ObjectMapper();
         List modelList = mapFromJson(json, ArrayList.class);
@@ -49,7 +80,18 @@ public class FSJsonUtils {
         return list;
     }
 
-    // tw
+    /**
+     * Converts a HashMap to an object of the specified class.
+     * Each key in the HashMap is matched to a field name in the class.
+     *
+     * @param <T> The type of the object to create
+     * @param map The HashMap containing the field values
+     * @param clazz The class of the object to create
+     * @return An object of the specified class with fields set from the HashMap
+     * @throws NoSuchFieldException if a field in the class matching a key in the HashMap is not found
+     * @throws IllegalAccessException if a field cannot be accessed
+     * @throws InstantiationException if an instance of the class cannot be created
+     */
     public static <T> T hashMapToRest(HashMap map, Class<T> clazz)
             throws NoSuchFieldException, IllegalAccessException, InstantiationException {
         T restModel = clazz.newInstance();

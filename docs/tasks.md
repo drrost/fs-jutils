@@ -53,10 +53,10 @@ This document contains a comprehensive list of improvement tasks for the FastStr
 
 ## Code Quality Improvements
 
-[ ] 9. Standardize error handling:
-   - [ ] Create custom exceptions for the library
-   - [ ] Replace generic RuntimeExceptions with specific exceptions
-   - [ ] Add proper context to exception messages
+[X] 9. Standardize error handling:
+   - [X] Create custom exceptions for the library
+   - [X] Replace generic RuntimeExceptions with specific exceptions
+   - [X] Add proper context to exception messages
 
 [ ] 10. Improve null safety:
    - [ ] Add null checks to all public methods
