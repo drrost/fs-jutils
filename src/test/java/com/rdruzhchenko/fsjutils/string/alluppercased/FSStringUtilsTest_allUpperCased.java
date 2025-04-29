@@ -1,46 +1,57 @@
 package com.rdruzhchenko.fsjutils.string.alluppercased;
 
 import com.rdruzhchenko.fsjutils.FSStringUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@DisplayName("FSStringUtils - isAllUpperCase method")
 public class FSStringUtilsTest_allUpperCased {
 
-    @Test
-    public void testUppercased() {
-        // Given
-        var s = "МЕЛЬНИЧЕНКО";
+    @Nested
+    @DisplayName("isAllUpperCase tests")
+    class IsAllUpperCaseTests {
 
-        // When
-        var result = FSStringUtils.isAllUpperCase(s);
+        @Test
+        @DisplayName("Should return true when string is all uppercase")
+        void shouldReturnTrueWhenStringIsAllUpperCase() {
+            // Given
+            var s = "МЕЛЬНИЧЕНКО";
 
-        // Then
-        assertTrue(result);
-    }
+            // When
+            var result = FSStringUtils.isAllUpperCase(s);
 
-    @Test
-    public void testSomeUppercased() {
-        // Given
-        var s = "МЕЛЬНИчЕНКО";
+            // Then
+            assertTrue(result);
+        }
 
-        // When
-        var result = FSStringUtils.isAllUpperCase(s);
+        @Test
+        @DisplayName("Should return false when string contains mixed case")
+        void shouldReturnFalseWhenStringContainsMixedCase() {
+            // Given
+            var s = "МЕЛЬНИчЕНКО";
 
-        // Then
-        assertFalse(result);
-    }
+            // When
+            var result = FSStringUtils.isAllUpperCase(s);
 
-    @Test
-    public void testLowercased() {
-        // Given
-        var s = "мельниченко";
+            // Then
+            assertFalse(result);
+        }
 
-        // When
-        var result = FSStringUtils.isAllUpperCase(s);
+        @Test
+        @DisplayName("Should return false when string is all lowercase")
+        void shouldReturnFalseWhenStringIsAllLowerCase() {
+            // Given
+            var s = "мельниченко";
 
-        // Then
-        assertFalse(result);
+            // When
+            var result = FSStringUtils.isAllUpperCase(s);
+
+            // Then
+            assertFalse(result);
+        }
     }
 }

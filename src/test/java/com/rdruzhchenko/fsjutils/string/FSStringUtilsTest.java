@@ -1,69 +1,87 @@
 package com.rdruzhchenko.fsjutils.string;
 
 import com.rdruzhchenko.fsjutils.FSStringUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("FSStringUtils")
 class FSStringUtilsTest {
 
-    @Test
-    void trimLeadingColon() {
-        // Given
-        var s = ":";
+    @Nested
+    @DisplayName("trimLeadingColon tests")
+    class TrimLeadingColonTests {
 
-        // When
-        s = FSStringUtils.trimLeadingColon(s);
+        @Test
+        @DisplayName("Should return empty string when input is only a colon")
+        void shouldReturnEmptyStringWhenInputIsOnlyAColon() {
+            // Given
+            var s = ":";
 
-        // Then
-        assertEquals("", s);
+            // When
+            s = FSStringUtils.trimLeadingColon(s);
+
+            // Then
+            assertEquals("", s);
+        }
+
+        @Test
+        @DisplayName("Should return space when input is colon followed by space")
+        void shouldReturnSpaceWhenInputIsColonFollowedBySpace() {
+            // Given
+            var s = ": ";
+
+            // When
+            s = FSStringUtils.trimLeadingColon(s);
+
+            // Then
+            assertEquals(" ", s);
+        }
+
+        @Test
+        @DisplayName("Should return text with leading space when input is colon followed by space and text")
+        void shouldReturnTextWithLeadingSpaceWhenInputIsColonFollowedBySpaceAndText() {
+            // Given
+            var s = ": diagnosis";
+
+            // When
+            s = FSStringUtils.trimLeadingColon(s);
+
+            // Then
+            assertEquals(" diagnosis", s);
+        }
     }
 
-    @Test
-    void trimLeadingColon2() {
-        // Given
-        var s = ": ";
+    @Nested
+    @DisplayName("trimAllAndColon tests")
+    class TrimAllAndColonTests {
 
-        // When
-        s = FSStringUtils.trimLeadingColon(s);
+        @Test
+        @DisplayName("Should return text without leading space when trimming all and colon")
+        void shouldReturnTextWithoutLeadingSpaceWhenTrimmingAllAndColon() {
+            // Given
+            var s = ": diagnosis";
 
-        // Then
-        assertEquals(" ", s);
-    }
+            // When
+            s = FSStringUtils.trimAllAndColon(s);
 
-    @Test
-    void trimLeadingColon3() {
-        // Given
-        var s = ": diagnosis";
+            // Then
+            assertEquals("diagnosis", s);
+        }
 
-        // When
-        s = FSStringUtils.trimLeadingColon(s);
+        @Test
+        @DisplayName("Should preserve trailing colon when trimming all and leading colon")
+        void shouldPreserveTrailingColonWhenTrimmingAllAndLeadingColon() {
+            // Given
+            var s = ": diagnosis:";
 
-        // Then
-        assertEquals(" diagnosis", s);
-    }
+            // When
+            s = FSStringUtils.trimAllAndColon(s);
 
-    @Test
-    void trimLeadingColon4() {
-        // Given
-        var s = ": diagnosis";
-
-        // When
-        s = FSStringUtils.trimAllAndColon(s);
-
-        // Then
-        assertEquals("diagnosis", s);
-    }
-
-    @Test
-    void trimLeadingColon5() {
-        // Given
-        var s = ": diagnosis:";
-
-        // When
-        s = FSStringUtils.trimAllAndColon(s);
-
-        // Then
-        assertEquals("diagnosis:", s);
+            // Then
+            assertEquals("diagnosis:", s);
+        }
     }
 }
