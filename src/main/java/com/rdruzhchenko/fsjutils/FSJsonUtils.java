@@ -2,6 +2,7 @@ package com.rdruzhchenko.fsjutils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rdruzhchenko.fsjutils.exception.FSJsonException;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class FSJsonUtils {
         try {
             return objectMapper.writeValueAsString(restModel);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new FSJsonException("Failed to serialize object to JSON", e);
         }
     }
 
@@ -24,7 +25,7 @@ public class FSJsonUtils {
         try {
             return objectMapper.readValue(json, clazz);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new FSJsonException("Failed to deserialize JSON to object of type " + clazz.getName(), e);
         }
     }
 
@@ -41,7 +42,7 @@ public class FSJsonUtils {
                 }
                 return o;
             } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
-                throw new RuntimeException(e);
+                throw new FSJsonException("Failed to convert HashMap to object of type " + clazz.getName(), e);
             }
         }).toList();
 
@@ -69,7 +70,7 @@ public class FSJsonUtils {
                 .constructCollectionType(List.class, clazz);
             return objectMapper.readValue(json, typeFactory);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new FSJsonException("Failed to deserialize JSON to list of " + clazz.getName(), e);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.rdruzhchenko.fsjutils;
 
+import com.rdruzhchenko.fsjutils.exception.FSFileException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -34,14 +35,13 @@ public class FSFileSystemUtils {
         ClassLoader classLoader = FSFileSystemUtils.class.getClassLoader();
         java.net.URL resource = classLoader.getResource(path);
         if (resource == null) {
-            throw new IllegalArgumentException("file not found!");
+            throw new FSFileException("Resource file not found: " + path);
         } else {
             try {
                 return new String(Files.readAllBytes(
                         Paths.get(resource.toURI())), StandardCharsets.UTF_8);
             } catch (IOException | java.net.URISyntaxException e) {
-                e.printStackTrace();
-                return null;
+                throw new FSFileException("Failed to read resource file: " + path, e);
             }
         }
     }

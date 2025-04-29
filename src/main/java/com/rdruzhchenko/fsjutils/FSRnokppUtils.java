@@ -1,5 +1,6 @@
 package com.rdruzhchenko.fsjutils;
 
+import com.rdruzhchenko.fsjutils.exception.FSValidationException;
 import java.time.LocalDate;
 
 public class FSRnokppUtils {
@@ -28,7 +29,7 @@ public class FSRnokppUtils {
 
     public static String getDob(String code) {
         if (code == null || !code.matches("\\d{10}")) {
-            throw new IllegalArgumentException("Code must contain 10 digits");
+            throw new FSValidationException("Invalid RNOKPP code format: " + code + ". RNOKPP code must contain exactly 10 digits.");
         }
 
         int daysSinceBase = Integer.parseInt(code.substring(0, 5));
@@ -43,7 +44,7 @@ public class FSRnokppUtils {
 
     public static Gender getGender(String code) {
         if (code == null || !code.matches("\\d{10}")) {
-            throw new IllegalArgumentException("Code must contain 10 digits");
+            throw new FSValidationException("Invalid RNOKPP code format: " + code + ". RNOKPP code must contain exactly 10 digits.");
         }
 
         int genderDigit = Character.getNumericValue(code.charAt(8));

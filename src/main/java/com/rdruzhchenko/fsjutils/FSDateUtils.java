@@ -1,5 +1,6 @@
 package com.rdruzhchenko.fsjutils;
 
+import com.rdruzhchenko.fsjutils.exception.FSDateException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -22,7 +23,7 @@ public class FSDateUtils {
 
     public static final String DATE_FORMAT_POSTGRES = "yyyy-MM-dd";
 
-    public static Date dateFromString(String dateString) throws RuntimeException {
+    public static Date dateFromString(String dateString) throws FSDateException {
         if (dateString == null || dateString.isEmpty())
             return null;
         Date result = dateFrom(DATE_FORMAT_LONG, dateString);
@@ -37,7 +38,7 @@ public class FSDateUtils {
         if (result != null)
             return result;
 
-        throw new RuntimeException("Can't parse string \"" + dateString.trim() + "\"");
+        throw new FSDateException("Failed to parse date string: \"" + dateString.trim() + "\". Expected formats: " + DATE_FORMAT_LONG + ", " + DATE_FORMAT_MIDDLE + ", or " + DATE_FORMAT_SHORT);
     }
 
     public static String dateToString(Date date) {
@@ -148,7 +149,7 @@ public class FSDateUtils {
         try {
             Date date = dateFromString(dateString);
             return date != null;
-        } catch (RuntimeException e) {
+        } catch (FSDateException e) {
             return false;
         }
     }
@@ -173,13 +174,13 @@ public class FSDateUtils {
 
     // Returns true if date1 < date2
     //
-    public static boolean isDateLessThan(String date1, String date2) throws RuntimeException {
+    public static boolean isDateLessThan(String date1, String date2) throws FSDateException {
         var date1date = dateFromString(date1);
         var date2date = dateFromString(date2);
         return date1date.compareTo(date2date) < 0;
     }
 
-    public static boolean isDateLessOrEqualsThan(String date1, String date2) throws RuntimeException {
+    public static boolean isDateLessOrEqualsThan(String date1, String date2) throws FSDateException {
         var date1date = dateFromString(date1);
         var date2date = dateFromString(date2);
         return date1date.compareTo(date2date) <= 0;
@@ -246,7 +247,7 @@ public class FSDateUtils {
     public static String getTimeFromDateTime(String dateTime) {
         String[] splitedDateTime = dateTime.split(" ");
         if (splitedDateTime[1] == null) {
-            throw new RuntimeException("DateTime wrong format");
+            throw new FSDateException("Invalid date-time format: '" + dateTime + "'. Expected format: 'dd.MM.yyyy HH:mm:ss' or 'dd.MM.yyyy HH:mm'");
         }
         return splitedDateTime[1];
     }
@@ -259,7 +260,7 @@ public class FSDateUtils {
                 return time;
             }
         } catch (DateTimeParseException e) {
-            throw new RuntimeException("Can't parse string \"" + time.trim() + "\"");
+            throw new FSDateException("Failed to parse time string: \"" + time.trim() + "\". Expected format: 'HH:mm:ss' or 'HH:mm'", e);
         }
     }
 
@@ -269,7 +270,7 @@ public class FSDateUtils {
             var time2Seconds = LocalTime.parse(time2).toSecondOfDay();
             return time1Seconds < time2Seconds;
         } catch (DateTimeParseException e) {
-            throw new RuntimeException("Can't parse string " + time1.trim() + " or " + time2.trim());
+            throw new FSDateException("Failed to parse time strings: \"" + time1.trim() + "\" or \"" + time2.trim() + "\". Expected format: 'HH:mm:ss' or 'HH:mm'", e);
         }
     }
 
@@ -289,8 +290,7 @@ public class FSDateUtils {
 
             return date1.compareTo(date2);
         } catch (ParseException e) {
-            System.out.println("Invalid date format: " + e.getMessage());
-            throw new IllegalArgumentException("Invalid date format", e);
+            throw new FSDateException("Invalid date format for comparison: \"" + dateStr1 + "\" or \"" + dateStr2 + "\". Expected format: " + DATE_TIME_FORMAT, e);
         }
     }
 
@@ -347,7 +347,7 @@ public class FSDateUtils {
             formatter = new SimpleDateFormat(DATE_FORMAT_LONG);
             return formatter.format(date);
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            throw new FSDateException("Failed to parse PostgreSQL date format: \"" + s + "\". Expected format: " + DATE_FORMAT_POSTGRES, e);
         }
     }
 

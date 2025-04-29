@@ -1,5 +1,6 @@
 package com.rdruzhchenko.fsjutils;
 
+import com.rdruzhchenko.fsjutils.exception.FSStringException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -76,7 +77,7 @@ public class FSStringUtils {
 
     public static Character getLastChar(String s) {
         if (s == null) {
-            throw new RuntimeException("passed string is `null`");
+            throw new FSStringException("Cannot get last character: input string is null");
         }
 
         var lastString = getLast(s);
@@ -104,7 +105,7 @@ public class FSStringUtils {
 
     public static String dropLastPathComponent(String s) {
         if (s == null) {
-            throw new IllegalArgumentException("Path and delimiter cannot be null");
+            throw new FSStringException("Cannot drop last path component: input path is null");
         }
 
         int lastIndex = s.lastIndexOf("/");
