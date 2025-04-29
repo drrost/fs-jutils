@@ -91,10 +91,10 @@ This document contains a comprehensive list of improvement tasks for the FastStr
 
 ## Testing Improvements
 
-[ ] 16. Increase test coverage:
-   - [ ] Add tests for all public methods
-   - [ ] Add tests for edge cases (null inputs, empty strings, etc.)
-   - [ ] Add tests for error conditions
+[X] 16. Increase test coverage:
+   - [X] Add tests for all public methods
+   - [X] Add tests for edge cases (null inputs, empty strings, etc.)
+   - [X] Add tests for error conditions
 
 [X] 17. Standardize test structure:
    - [X] Use consistent Given-When-Then format for all tests
