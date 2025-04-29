@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FSJsonUtilsTest {
 
     // Simple test class for JSON serialization/deserialization
-    static class TestPerson {
+    public static class TestPerson {
         public String name;
         public int age;
 
