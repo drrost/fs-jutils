@@ -11,10 +11,10 @@ This document contains a comprehensive list of improvement tasks for the FastStr
    - [ ] Contribution guidelines
    - [ ] License information
 
-[ ] 3. Create a developer guide with:
+[X] 3. Create a developer guide with:
    - [X] Architecture overview
    - [X] Coding standards
-   - [ ] Testing requirements
+   - [X] Testing requirements
 
 ## Architecture Improvements
 
