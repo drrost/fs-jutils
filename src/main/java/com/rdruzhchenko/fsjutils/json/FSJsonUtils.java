@@ -136,11 +136,12 @@ public class FSJsonUtils {
         if (json == null) {
             throw new IllegalArgumentException("JSON string cannot be null");
         }
-        List modelList = mapFromJson(json, ArrayList.class);
-        var list = modelList.stream().map(o -> {
+        List<?> modelList = mapFromJson(json, ArrayList.class);
+        @SuppressWarnings("unchecked")
+        List<T> list = (List<T>) modelList.stream().map(o -> {
             try {
-                if (o instanceof HashMap) {
-                    return hashMapToRest((HashMap) o, clazz);
+                if (o instanceof HashMap<?, ?>) {
+                    return hashMapToRest((HashMap<?, ?>) o, clazz);
                 }
                 if (o instanceof List) {
                     return o;
@@ -166,17 +167,22 @@ public class FSJsonUtils {
      * @throws IllegalAccessException if a field cannot be accessed
      * @throws InstantiationException if an instance of the class cannot be created
      */
-    public static <T> T hashMapToRest(HashMap map, Class<T> clazz)
+    public static <T> T hashMapToRest(HashMap<?, ?> map, Class<T> clazz)
             throws NoSuchFieldException, IllegalAccessException, InstantiationException {
-        T restModel = clazz.newInstance();
+        try {
+            T restModel = clazz.getDeclaredConstructor().newInstance();
 
-        var keys = map.keySet().toArray();
-        for (Object key : keys) {
-            Field field = restModel.getClass().getDeclaredField(key.toString());
-            field.set(restModel, map.get(key.toString()));
+            var keys = map.keySet().toArray();
+            for (Object key : keys) {
+                Field field = restModel.getClass().getDeclaredField(key.toString());
+                field.set(restModel, map.get(key.toString()));
+            }
+
+            return restModel;
+        } catch (NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
+            // Wrap constructor-related exceptions in InstantiationException for backward compatibility
+            throw new InstantiationException("Failed to instantiate class: " + e.getMessage());
         }
-
-        return restModel;
     }
 
     /**

@@ -248,7 +248,7 @@ class FSRandomUtilsTest {
             
             // When & Then
             for (int i = 0; i < count && (!foundTrue || !foundFalse); i++) {
-                boolean result = FSRandomUtils.randBool();
+                boolean result = FSRandomUtils.randBoolean();
                 if (result) {
                     foundTrue = true;
                 } else {

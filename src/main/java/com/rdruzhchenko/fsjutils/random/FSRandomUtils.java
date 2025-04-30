@@ -11,7 +11,23 @@ import java.util.UUID;
  */
 public class FSRandomUtils {
 
-    private static final Random rand = new Random();
+    private static final Random RAND = new Random();
+
+    // Constants for magic numbers
+    private static final int DEFAULT_MAX_INT = 20_000;
+    private static final int DEFAULT_MIN_INT = 0;
+    private static final int MAX_STRING_LENGTH = 50;
+    private static final int MIN_STRING_LENGTH = 1;
+    private static final int MIN_BYTES_LENGTH = 10;
+    private static final int MAX_BYTES_LENGTH = 100;
+
+    // ASCII character ranges
+    private static final int ASCII_RANGE_START = 48;  // '0'
+    private static final int ASCII_RANGE_END = 123;   // 'z' + 1
+    private static final int ASCII_DIGIT_END = 57;    // '9'
+    private static final int ASCII_UPPER_START = 65;  // 'A'
+    private static final int ASCII_UPPER_END = 90;    // 'Z'
+    private static final int ASCII_LOWER_START = 97;  // 'a'
 
     /**
      * Generates a random integer between the specified minimum and maximum values (inclusive).
@@ -21,7 +37,7 @@ public class FSRandomUtils {
      * @return A random integer between min and max
      */
     public static int randInt(int min, int max) {
-        return rand.nextInt((max - min) + 1) + min;
+        return RAND.nextInt((max - min) + 1) + min;
     }
 
     /**
@@ -30,7 +46,7 @@ public class FSRandomUtils {
      * @return A random integer between 0 and 20,000
      */
     public static int randInt() {
-        return randInt(0, 20_000);
+        return randInt(DEFAULT_MIN_INT, DEFAULT_MAX_INT);
     }
 
     /**
@@ -48,11 +64,8 @@ public class FSRandomUtils {
      * @return A random boolean value (true or false)
      */
     public static boolean randBoolean() {
-        Random rd = new Random();
-        return rd.nextBoolean();
+        return RAND.nextBoolean();
     }
-
-    private static final Random PRNG = new Random();
 
     /**
      * Returns a random enum value from the specified enum class.
@@ -61,10 +74,9 @@ public class FSRandomUtils {
      * @param clazz The enum class
      * @return A random enum value from the specified class
      */
-    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
-        Random random = new Random();
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
         T[] enumValues = clazz.getEnumConstants();
-        return enumValues[random.nextInt(enumValues.length)];
+        return enumValues[RAND.nextInt(enumValues.length)];
     }
 
     /**
@@ -73,10 +85,11 @@ public class FSRandomUtils {
      * @return A random alphanumeric string
      */
     public static String randString() {
-        int randomLength = rand.nextInt(50) + 1;
+        int randomLength = RAND.nextInt(MAX_STRING_LENGTH) + MIN_STRING_LENGTH;
 
-        return rand.ints(48, 123)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+        return RAND.ints(ASCII_RANGE_START, ASCII_RANGE_END)
+                .filter(i -> (i <= ASCII_DIGIT_END || i >= ASCII_UPPER_START) && 
+                             (i <= ASCII_UPPER_END || i >= ASCII_LOWER_START))
                 .limit(randomLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
@@ -89,17 +102,7 @@ public class FSRandomUtils {
      * @return A random string
      */
     public static String randDate() {
-        return FSRandomUtils.randString();
-    }
-
-    /**
-     * Generates a random boolean value.
-     * This is an alias for randBoolean().
-     *
-     * @return A random boolean value (true or false)
-     */
-    public static boolean randBool() {
-        return rand.nextBoolean();
+        return randString();
     }
 
     /**
@@ -109,9 +112,9 @@ public class FSRandomUtils {
      * @return A random byte array
      */
     public static byte[] randBytes() {
-        byte[] randomBytes = new byte[randInt(10, 100)];
-        SecureRandom random = new SecureRandom();
-        random.nextBytes(randomBytes);
+        byte[] randomBytes = new byte[randInt(MIN_BYTES_LENGTH, MAX_BYTES_LENGTH)];
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(randomBytes);
         return randomBytes;
     }
 }
