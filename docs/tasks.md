@@ -11,33 +11,12 @@ This document contains a comprehensive list of improvement tasks for the FastStr
    - [ ] Contribution guidelines
    - [ ] License information
 
-[X] 2. Add JavaDoc to all public classes and methods:
-   - [X] FSStringUtils
-   - [X] FSDateUtils
-   - [X] FSJsonUtils
-   - [X] FSNameUtils
-   - [X] FSFileUtils
-   - [X] FSFileSystemUtils
-   - [X] FSPhoneNumberFormatter
-   - [X] FSRandomUtils
-   - [X] FSRnokppUtils
-
 [ ] 3. Create a developer guide with:
    - [X] Architecture overview
-   - [ ] Coding standards
+   - [X] Coding standards
    - [ ] Testing requirements
 
 ## Architecture Improvements
-
-[X] 4. Standardize naming conventions:
-   - [X] Ensure all utility classes have consistent "FS" prefix
-   - [X] Rename FileSystemUtils to FSFileSystemUtils for consistency
-
-[X] 5. Organize classes into logical packages:
-   - [X] Create string package for string utilities
-   - [X] Create date package for date utilities
-   - [X] Create file package for file utilities
-   - [X] Create json package for JSON utilities
 
 [ ] 6. Implement interfaces for better abstraction:
    - [ ] Define interfaces for major utility categories
@@ -47,16 +26,7 @@ This document contains a comprehensive list of improvement tasks for the FastStr
    - [ ] Split FSDateUtils into smaller, focused classes
    - [ ] Split FSStringUtils into smaller, focused classes
 
-[X] 8. Implement proper dependency injection:
-   - [X] Remove direct instantiation of dependencies (e.g., ObjectMapper)
-   - [X] Allow for configuration of dependencies
-
 ## Code Quality Improvements
-
-[X] 9. Standardize error handling:
-   - [X] Create custom exceptions for the library
-   - [X] Replace generic RuntimeExceptions with specific exceptions
-   - [X] Add proper context to exception messages
 
 [ ] 10. Improve null safety:
    - [ ] Add null checks to all public methods
@@ -90,16 +60,6 @@ This document contains a comprehensive list of improvement tasks for the FastStr
    - [ ] Fix magic numbers and strings
 
 ## Testing Improvements
-
-[X] 16. Increase test coverage:
-   - [X] Add tests for all public methods
-   - [X] Add tests for edge cases (null inputs, empty strings, etc.)
-   - [X] Add tests for error conditions
-
-[X] 17. Standardize test structure:
-   - [X] Use consistent Given-When-Then format for all tests
-   - [X] Use descriptive test names
-   - [X] Group related tests together
 
 [ ] 18. Add integration tests:
    - [ ] Test interactions between utility classes
